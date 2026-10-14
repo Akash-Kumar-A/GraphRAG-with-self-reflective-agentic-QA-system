@@ -19,10 +19,7 @@ with st.sidebar:
     emb = st.text_input("Embedding model", "nomic-embed-text"); workers = st.slider("Parallel requests", 1, 16, 8)
     st.header("Privacy (DP)")
     alg = st.selectbox("Algorithm", ["dpsparse", "dpvote"], format_func=lambda a: {"dpsparse": "DPSparseVoteRAG", "dpvote": "DPVoteRAG"}[a])
-    # eps_tot = st.slider("ε total", 2.0, 40.0, 10.0, 1.0); eps_tok = st.select_slider("ε per token", [1.0, 2.0, 5.0], 2.0); m = st.slider("Voters m", 10, 50, 30, 5)
-    # k_dp = st.slider("Records per voter k", 1, 3, 1)
-    eps_tot = st.slider("ε total", 2.0, 40.0, 10.0, 1.0); eps_tok = st.select_slider("ε per token", [1.0, 2.0, 5.0], 2.0); m = st.slider("Voters m", 1, 50, 30, 5)
-    k_dp = st.slider("Records per voter k", 1, 5, 1)
+    eps_tot = st.slider("ε total", 2.0, 40.0, 10.0, 1.0); eps_tok = st.select_slider("ε per token", [1.0, 2.0, 5.0], 2.0); m = st.slider("Voters m", 10, 50, 30, 5)
     k = st.slider("Plain RAG: records in context", 1, 20, 3)
 ol = Ollama(host, model, emb, workers); store = Store(ol)
 st.title("RAG without and with the DP layer")
@@ -49,12 +46,13 @@ if st.button("Run both", type="primary", disabled=store.count() == 0):
         st.success(p["answer"]); st.caption(f"{p['seconds']:.1f}s · records the model saw:")
         for d in p["retrieved"]: st.markdown(f'<div class="rec">{d}</div>', unsafe_allow_html=True)
     with R:
-        st.subheader("With DP"); st.caption(f"{m} voters each see {k_dp} record(s); tokens are voted with noise.")
+        st.subheader("With DP"); st.caption(f"{m} voters each see {k} record(s); tokens are voted with noise.")
         live = st.empty()
-        d = dp_rag(ol, store, q, m=m,k=k_dp, eps_tok=eps_tok, eps_tot=eps_tot, alg=alg, on_step=lambda s, u: live.markdown(chips(s) + f"<br><small>private tokens so far: {u}</small>", unsafe_allow_html=True))
+        d = dp_rag(ol, store, q, m=m, eps_tok=eps_tok, eps_tot=eps_tot, alg=alg, on_step=lambda s, u: live.markdown(chips(s) + f"<br><small>private tokens so far: {u}</small>", unsafe_allow_html=True))
         live.empty(); st.success(d["answer"] or "(no answer: budget or votes exhausted)"); st.markdown(chips(d["steps"]), unsafe_allow_html=True)
         a, b, c = st.columns(3); a.metric("Private tokens", f"{d['private_tokens']} / {d['tmax']}"); b.metric("ε spent", f"{d['eps_spent']:.2f} / {eps_tot:g}"); c.metric("Time", f"{d['seconds']:.0f}s")
         st.caption("Teal: public model, free. Amber: voted from confidential records, spends ε. The answer reflects what most records say, not any single record.")
     if target and q.startswith(f"Why did {target['name']}"):
         secret = target["text"].split("due to ")[1].split(",")[0]
         st.markdown(f"**Leak check** (secret reason: *{secret}*): without DP → {'**LEAKED**' if secret in p['answer'].lower() else 'not leaked'} · with DP → {'**LEAKED**' if secret in d['answer'].lower() else 'not leaked'}")
+

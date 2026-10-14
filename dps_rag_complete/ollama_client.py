@@ -24,3 +24,6 @@ class Ollama:
             try: out += s._post("/api/embed", {"model": s.embed_model, "input": b})["embeddings"]
             except Exception: out += [s._post("/api/embeddings", {"model": s.embed_model, "prompt": t})["embedding"] for t in b]
         return out
+
+
+
