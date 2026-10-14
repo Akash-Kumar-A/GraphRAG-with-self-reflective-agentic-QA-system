@@ -10,7 +10,7 @@ class Ollama:
     def models(s):
         r = s.http.get(s.host + "/api/tags", timeout=10); r.raise_for_status(); return [m["name"] for m in r.json().get("models", [])]
     def _gen(s, prompt, n, stop=None):
-        o = {"temperature": 0, "seed": 0, "num_predict": n}
+        o = {"temperature": 0.3, "seed": 0, "num_predict": n}
         if stop: o["stop"] = stop
         return s._post("/api/generate", {"model": s.model, "prompt": prompt, "raw": True, "stream": False, "options": o}).get("response", "")
     def next_piece(s, prompt): return s._gen(prompt, 1)                       # ONE token, greedy
