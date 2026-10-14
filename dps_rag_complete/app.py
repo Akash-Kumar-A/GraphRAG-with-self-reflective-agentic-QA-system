@@ -50,7 +50,8 @@ if st.button("Run both", type="primary", disabled=store.count() == 0):
         live = st.empty()
         d = dp_rag(ol, store, q, m=m, eps_tok=eps_tok, eps_tot=eps_tot, alg=alg, on_step=lambda s, u: live.markdown(chips(s) + f"<br><small>private tokens so far: {u}</small>", unsafe_allow_html=True))
         live.empty(); st.success(d["answer"] or "(no answer: budget or votes exhausted)"); st.markdown(chips(d["steps"]), unsafe_allow_html=True)
-        a, b, c = st.columns(3); a.metric("Private tokens", f"{d['private_tokens']} / {d['tmax']}"); b.metric("ε spent", f"{d['eps_spent']:.2f} / {eps_tot:g}"); c.metric("Time", f"{d['seconds']:.0f}s")
+        # a, b, c = st.columns(3); a.metric("Private tokens", f"{d['private_tokens']} / {d['tmax']}"); b.metric("ε spent", f"{d['eps_spent']:.2f} / {eps_tot:g}"); c.metric("Time", f"{d['seconds']:.0f}s")
+        a, b, c = st.columns(3); a.metric("Private tokens", f"{d['private_tokens']} / {d['tmax']}"); b.metric("Privacy guarantee", f"ε = {d['eps_guaranteed']:g}, δ = {d['delta_guaranteed']:g}");c.metric("Time", f"{d['seconds']:.0f}s" if "seconds" in d else "hidden")
         st.caption("Public model, free. Voted from confidential records, spends ε. The answer reflects what most records say, not any single record.")
     if target and q.startswith(f"Why did {target['name']}"):
         secret = target["text"].split("due to ")[1].split(",")[0]
