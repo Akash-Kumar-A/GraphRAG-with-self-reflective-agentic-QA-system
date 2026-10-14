@@ -1,0 +1,221 @@
+[
+  {
+    "url": "https://www.psgtech.edu/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='www.psgtech.edu', port=443): Max retries exceeded with url: /robots.txt (Caused by SSLError(SSLError(1, '[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1016)')))",
+    "robots_url": "https://www.psgtech.edu/robots.txt"
+  },
+  {
+    "url": "https://library.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='library.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by NameResolutionError(\"HTTPSConnection(host='library.psgtech.ac.in', port=443): Failed to resolve 'library.psgtech.ac.in' ([Errno 11001] getaddrinfo failed)\"))",
+    "robots_url": "https://library.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://alumni.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_loaded",
+    "robots_url": "https://alumni.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://iprcell.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='iprcell.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)')))",
+    "robots_url": "https://iprcell.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://ir.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='ir.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by NewConnectionError(\"HTTPSConnection(host='ir.psgtech.ac.in', port=443): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))",
+    "robots_url": "https://ir.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://journals.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='journals.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='journals.psgtech.ac.in', port=443) at 0x2db2f1ebf10>, 'Connection to journals.psgtech.ac.in timed out. (connect timeout=15)'))",
+    "robots_url": "https://journals.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://cnce.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='cnce.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)')))",
+    "robots_url": "https://cnce.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://csrc.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='csrc.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)')))",
+    "robots_url": "https://csrc.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://aiconsortium.psgtech.ac.in/",
+    "reason": "blocked_by_robots_txt_or_robots_check",
+    "robots_state": "robots_fetch_error_fail_closed:HTTPSConnectionPool(host='aiconsortium.psgtech.ac.in', port=443): Max retries exceeded with url: /robots.txt (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)')))",
+    "robots_url": "https://aiconsortium.psgtech.ac.in/robots.txt"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzQifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzQifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzQifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzUifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzUifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzUifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzkifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzkifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNiIsImlkIjoiMzkifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjgifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjgifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjgifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjkifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjkifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjkifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzAifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzAifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzAifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzEifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzEifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMzEifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjEifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjEifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjEifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjIifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjIifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjIifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjMifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjMifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjMifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjUifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjUifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjUifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjQifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjQifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNSIsImlkIjoiMjQifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMjAifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMjAifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMjAifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTgifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTgifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTgifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTcifQ==",
+    "reason": "js_render_fallback_unavailable",
+    "detail": "playwright_error:TimeoutError('Page.goto: Timeout 25000ms exceeded.\\nCall log:\\n  - navigating to \"https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTcifQ==\", waiting until \"networkidle\"\\n')"
+  },
+  {
+    "url": "https://academicschedule.psgtech.ac.in/eyJ5ZWFyIjoiMjAyNCIsImlkIjoiMTcifQ==",
+    "reason": "no_or_very_little_text_extracted",
+    "extraction_method": "requests_html",
+    "content_type": "text/html; charset=utf-8"
+  }
+]

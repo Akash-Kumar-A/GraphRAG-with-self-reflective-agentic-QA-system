@@ -1,0 +1,30 @@
+{
+  "started_at": "2026-10-14T05:00:23.796566+00:00",
+  "finished_at": "2026-10-14T05:13:12.540377+00:00",
+  "start_urls": [
+    "https://www.psgtech.edu/",
+    "https://library.psgtech.ac.in/",
+    "https://sports.psgtech.ac.in/",
+    "https://alumni.psgtech.ac.in/",
+    "https://iprcell.psgtech.ac.in/",
+    "https://ir.psgtech.ac.in/",
+    "https://journals.psgtech.ac.in/",
+    "https://academicschedule.psgtech.ac.in/",
+    "https://enquiry.psgtech.ac.in/",
+    "https://iipc.psgtech.ac.in/",
+    "https://cnce.psgtech.ac.in/",
+    "https://csrc.psgtech.ac.in/",
+    "https://aiconsortium.psgtech.ac.in/"
+  ],
+  "allowed_domains": [
+    "psgtech.edu",
+    "psgtech.ac.in"
+  ],
+  "pages_and_documents_extracted": 24,
+  "unique_urls_attempted": 48,
+  "failures_or_skips": 39,
+  "output_jsonl": "psg_corpus\\psg_corpus.jsonl",
+  "robots_policy": "Disallowed URLs are not fetched; robots fetch errors fail closed.",
+  "js_render_enabled": true,
+  "note": "Check crawl_failures.json. A successful extraction is not proof of complete page coverage; scanned PDFs may require OCR."
+}

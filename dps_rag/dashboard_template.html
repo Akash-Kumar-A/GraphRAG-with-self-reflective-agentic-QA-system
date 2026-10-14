@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DPS layer · Differentially private RAG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Public+Sans:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#eef1f5;--panel:#fff;--ink:#14213d;--mute:#5d6b82;--line:#d5dce6;--free:#0e8a7d;--spend:#d9822b;--halt:#c0392b;--a:#1f4fd8;--b:#8b5cf6;--v:#14213d;--n:#8a94a6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1522;--panel:#16203a;--ink:#e8edf7;--mute:#9aa8c2;--line:#2a3856;--free:#2fc0b0;--spend:#f0a04d;--halt:#ff7a6b;--a:#6c92ff;--b:#a98bff;--v:#c8d3ea;--n:#7f8aa0}}
+:root[data-theme=dark]{--bg:#0e1522;--panel:#16203a;--ink:#e8edf7;--mute:#9aa8c2;--line:#2a3856;--free:#2fc0b0;--spend:#f0a04d;--halt:#ff7a6b;--a:#6c92ff;--b:#a98bff;--v:#c8d3ea;--n:#7f8aa0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 'Public Sans',system-ui,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
+h1,h2{font-family:Newsreader,Georgia,serif;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.1;max-width:20ch}
+h2{font-size:25px;margin:44px 0 4px}
+p.s{color:var(--mute);margin:0 0 14px;max-width:70ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:22px}
+.kpi b{display:block;font:700 30px Newsreader,serif}.kpi span{color:var(--mute);font-size:13px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+select,button{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+button:focus-visible,select:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.tr{margin:14px 0;padding-top:12px;border-top:1px solid var(--line)}
+.tr h4{margin:0 0 6px;font-size:14px}.tr small{color:var(--mute)}
+.ch{display:inline-block;margin:2px 3px 2px 0;padding:1px 7px;border-radius:5px;border:1.5px solid var(--free);color:var(--ink);font-size:14px}
+.ch.sp{border-color:var(--spend);background:color-mix(in srgb,var(--spend) 22%,transparent);font-weight:600}
+.ch.ha{border:1.5px dashed var(--halt);color:var(--halt)}
+.ch.vo{border-color:var(--halt)}
+.lg span{margin-right:16px;font-size:13px}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1.5px solid var(--free)}
+.bar{height:8px;background:var(--line);border-radius:4px;margin:6px 0;overflow:hidden}.bar div{height:100%;background:var(--spend)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}
+.wrap{overflow-x:auto}canvas{max-height:300px}
+.note li{margin:5px 0;color:var(--mute)}.note b{color:var(--ink)}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+</style></head><body><main>
+<h1>Spending privacy only where the answer needs it</h1>
+<p class="s" style="margin-top:12px">DPS layer of the project: differentially private RAG (DPVoteRAG and DPSparseVoteRAG, Koga et al. 2025) over a confidential student-services corpus, with the PSG Tech public corpus as the public language model.</p>
+<div class="kpis" id="kpis"></div>
+
+<h2>Watch the budget being spent</h2>
+<p class="s">Each answer is generated token by token. Teal tokens come from the public model and cost nothing; amber tokens were voted by 50 voters who each saw different confidential records, and each one spends privacy budget.</p>
+<div class="card"><div class="ctl"><label>Question <select id="q"></select></label><button id="rp">Replay</button></div>
+<div class="lg"><span><i></i>public model (free)</span><span><i style="border-color:var(--spend);background:color-mix(in srgb,var(--spend) 22%,transparent)"></i>private vote (spends ε)</span><span><i style="border-color:var(--halt)"></i>unprotected vote</span><span><i style="border:1.5px dashed var(--halt)"></i>halted</span></div><div id="trace"></div></div>
+
+<h2>Utility under a privacy budget</h2>
+<p class="s">Slot accuracy: how many of the four confidential facts (month, reason, outcome, reviewer) the answer states correctly, averaged over 12 questions and 10 seeds. DP rows use the best (m, ε<sub>token</sub>) for each ε<sub>total</sub>.</p>
+<div class="row"><div class="card"><canvas id="c1"></canvas></div><div class="card"><canvas id="c2"></canvas></div></div>
+<div class="row" style="margin-top:14px"><div class="card"><canvas id="c3"></canvas></div><div class="card"><canvas id="c4"></canvas></div></div>
+
+<h2>Hyperparameters</h2>
+<p class="s">Mean slot accuracy by number of voters m and per-token budget ε<sub>token</sub>.</p>
+<div class="card"><div class="ctl tabs" id="gt"></div><div class="wrap" id="grid"></div></div>
+
+<h2>Privacy accountant</h2>
+<p class="s">Maximum number of private tokens (c<sub>max</sub>) allowed by composition, with δ<sub>total</sub> = 10⁻⁴ and δ<sub>token</sub> = 10⁻⁵, and the ε actually consumed by DPSparseVoteRAG at m = 50.</p>
+<div class="card wrap" id="acct"></div>
+
+<h2>Does it leak? Membership inference</h2>
+<p class="s">Attacker queries with a record's own opening ("Student … submitted a … request in the month of") and scores the answer's overlap with the true continuation. AUC 0.5 means the attacker cannot tell members from non-members. 144 members and 144 non-members, bootstrap 95% interval.</p>
+<div class="row"><div class="card"><canvas id="c5"></canvas></div><div class="card wrap" id="mia"></div></div>
+
+<h2>Where it works and where it does not</h2>
+<div class="row"><div class="card"><canvas id="c6"></canvas></div><div class="card"><canvas id="c7"></canvas></div></div>
+
+<h2>Corpus and honest notes</h2>
+<div class="card note"><ul id="notes"></ul></div>
+</main>
+<script>
+const R=/*DATA*/null,$=s=>document.querySelector(s),f2=x=>x.toFixed(2),pc=x=>Math.round(x*100)+'%';
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const K={nonrag:css('--n'),vote:css('--v'),dpvote:css('--b'),dpsparse:css('--a')},NM={nonrag:'Non-RAG',vote:'VoteRAG (no privacy)',dpvote:'DPVoteRAG',dpsparse:'DPSparseVoteRAG'};
+Chart.defaults.font.family="'Public Sans',sans-serif";Chart.defaults.color=css('--mute');Chart.defaults.borderColor=css('--line');
+const at=a=>R.curve[a].find(c=>c.eps==10),m=R.meta,mi=R.mia;
+$('#kpis').innerHTML=[[pc(R.base.nonrag.mean),'Non-RAG slot accuracy'],[pc(R.base.vote_m50.mean),'VoteRAG, no privacy (upper bound)'],[pc(at('dpsparse').mean),'DPSparseVoteRAG at ε = 10'],[pc(at('dpvote').mean),'DPVoteRAG at ε = 10'],[f2(mi['Standard RAG (k=3)'].auc)+' → '+f2(mi['DPSparseVoteRAG (eps=10)'].auc),'Membership-attack AUC, standard RAG → DP']].map(([a,b])=>`<div class="card kpi"><b>${a}</b><span>${b}</span></div>`).join('');
+// trace
+R.trace.forEach((t,i)=>$('#q').add(new Option(`${t.question} (${t.n_docs} relevant records)`,i)));
+function trace(anim){const t=R.trace[+$('#q').value];let h=`<small>Ground truth: ${Object.entries(t.truth).map(([k,v])=>k+' = '+v).join(' · ')}</small>`;
+Object.entries(t.runs).forEach(([n,r])=>{const ok=Object.values(r.slots).filter(Boolean).length,eps=r.eps||0,tot=n.includes('eps=10')?10:0;
+const chips=r.steps.map(([w,s,c])=>`<span class="ch ${s=='private-vote'?'sp':s.startsWith('halt')?'ha':s=='vote'?'vo':''}" title="${s}${c!=null?' · votes agreeing: '+c:''}">${s.startsWith('halt')?'⊥ halt':w}</span>`).join('');
+h+=`<div class="tr"><h4>${n}</h4><div class="out">${chips}</div><small>${ok} of 4 facts correct · ${r.priv?r.priv+' private tokens':'no private tokens'}${tot?` · ε spent ${f2(eps)} of ${tot}`:''}</small>${tot?`<div class="bar"><div style="width:${Math.min(100,eps/tot*100)}%"></div></div>`:''}</div>`});
+$('#trace').innerHTML=h;if(anim){const cs=[...document.querySelectorAll('.ch')];cs.forEach(c=>c.style.visibility='hidden');let i=0;const id=setInterval(()=>{for(let k=0;k<3&&i<cs.length;k++)cs[i++].style.visibility='visible';if(i>=cs.length)clearInterval(id)},45)}}
+$('#q').onchange=()=>trace();$('#rp').onclick=()=>trace(true);trace();
+const eps=R.curve.nonrag.map(c=>c.eps);
+const ln=(id,title,ds,y,yt)=>new Chart($(id),{type:'line',data:{labels:eps,datasets:ds},options:{plugins:{title:{display:true,text:title,font:{size:14}},legend:{labels:{boxWidth:12}}},scales:{x:{title:{display:true,text:'ε total'}},y:{title:{display:true,text:yt},...y}}}});
+const L=(a,k,o={})=>({label:NM[a],data:R.curve[a].map(c=>c[k]),borderColor:K[a],backgroundColor:K[a],pointRadius:3,tension:.15,...o});
+ln('#c1','Slot accuracy vs privacy budget',[L('nonrag','mean',{borderDash:[2,4]}),L('vote','mean',{borderDash:[7,4]}),L('dpvote','mean'),L('dpsparse','mean')],{min:0,max:1},'slot accuracy');
+ln('#c2','All four facts correct (exact match)',[L('nonrag','exact',{borderDash:[2,4]}),L('vote','exact',{borderDash:[7,4]}),L('dpvote','exact'),L('dpsparse','exact')],{min:0,max:1},'fraction of questions');
+const tk=[];['dpvote','dpsparse'].forEach(a=>['1','2','5'].forEach((e,j)=>tk.push({label:NM[a]+' ε_token='+e,data:R.tokens[a][e].map(c=>c.n),borderColor:K[a],backgroundColor:K[a],borderDash:[[],[6,3],[2,3]][j],pointRadius:2,tension:.15})));
+ln('#c3','Answer length (tokens), m = 50',tk,{min:0},'avg tokens generated');
+const sl=['month','reason','outcome','faculty'];
+new Chart($('#c4'),{type:'bar',data:{labels:['month','reason','outcome','reviewer'],datasets:['nonrag','vote','dpvote','dpsparse'].map(a=>({label:NM[a],data:sl.map(s=>R.slots10[a][s]),backgroundColor:K[a]}))},options:{plugins:{title:{display:true,text:'Accuracy by fact at ε = 10',font:{size:14}}},scales:{y:{min:0,max:1}}}});
+// grid
+let ge='10';const gt=$('#gt');['5','10','20','40'].forEach(e=>{const b=document.createElement('button');b.textContent='ε total = '+e;b.onclick=()=>{ge=e;g()};gt.append(b)});
+function g(){[...gt.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent.endsWith(' '+ge)));
+let h='<table><tr><th>Algorithm · ε token</th>'+[30,40,50].map(x=>`<th>m = ${x}</th>`).join('')+'</tr>';
+['dpvote','dpsparse'].forEach(a=>['1','2','5'].forEach(e=>{h+=`<tr><td>${NM[a]} · ε=${e}</td>`+[30,40,50].map(x=>{const v=R.table[ge][a][e][x];return `<td style="background:color-mix(in srgb,${K[a]} ${Math.round(v*75)}%,transparent)">${f2(v)}</td>`}).join('')+'</tr>'}));$('#grid').innerHTML=h+'</table>'}g();
+// accountant
+let ah='<table><tr><th>ε total</th>'+[1,2,5].map(e=>`<th>ε token = ${e}<br><small>c max · private tokens used · ε spent</small></th>`).join('')+'</tr>';
+eps.forEach(e=>{ah+=`<tr><td>${e}</td>`+[1,2,5].map(t=>{const a=R.acct.find(x=>x.eps_tot==e&&x.eps_tok==t);return `<td>${a.cmax} · ${a.priv.toFixed(1)} · ${a.spent.toFixed(1)}</td>`}).join('')+'</tr>'});$('#acct').innerHTML=ah+'</table>';
+// mia
+const mc=[css('--halt'),css('--v'),css('--b'),css('--a'),css('--free')];
+new Chart($('#c5'),{type:'line',data:{datasets:[...Object.entries(mi).map(([k,v],i)=>({label:k+' · AUC '+f2(v.auc),data:v.fpr.map((x,j)=>({x,y:v.tpr[j]})),borderColor:mc[i],backgroundColor:mc[i],pointRadius:0,stepped:true,borderWidth:2})),{label:'Random guess',data:[{x:0,y:0},{x:1,y:1}],borderColor:css('--n'),borderDash:[4,4],pointRadius:0}]},options:{parsing:false,plugins:{title:{display:true,text:'ROC of the membership attack',font:{size:14}},legend:{labels:{boxWidth:12,font:{size:11}}}},scales:{x:{type:'linear',min:0,max:1,title:{display:true,text:'false positive rate'}},y:{min:0,max:1,title:{display:true,text:'true positive rate'}}}}});
+$('#mia').innerHTML='<table><tr><th>System</th><th>AUC</th><th>95% CI</th><th>TPR @ 10% FPR</th></tr>'+Object.entries(mi).map(([k,v])=>`<tr><td>${k}</td><td>${f2(v.auc)}</td><td>${f2(v.ci[0])}–${f2(v.ci[1])}</td><td>${pc(v.tpr_at_10)}</td></tr>`).join('')+'</table>';
+const bn=Object.keys(R.bins.vote);
+new Chart($('#c6'),{type:'bar',data:{labels:bn,datasets:[['nonrag','Non-RAG',R.bins.nonrag,K.nonrag],['vote','VoteRAG',R.bins.vote,K.vote],['10','DPSparse ε=10',R.bins['10'],K.dpsparse],['40','DPSparse ε=40',R.bins['40'],css('--free')]].map(([_,l,d,c])=>({label:l,data:bn.map(b=>d[b]),backgroundColor:c}))},options:{plugins:{title:{display:true,text:'Accuracy by number of relevant records',font:{size:14}}},scales:{y:{min:0,max:1}}}});
+new Chart($('#c7'),{type:'bar',data:{labels:m.topic_names,datasets:[{label:'relevant records',data:m.topic_sizes,backgroundColor:css('--spend')}]},options:{indexAxis:'y',plugins:{title:{display:true,text:'Records per topic in the confidential corpus',font:{size:14}},legend:{display:false}}}});
+$('#notes').innerHTML=[`<b>Public corpus:</b> ${m.public_docs} PSG Tech documents (${m.categories.faculty} faculty, ${m.categories.programme} programme, ${m.categories.institution} institution; ${m.words.toLocaleString()} words). Emails removed, line endings fixed, team note excluded. It trains the public language model only.`,
+`<b>Confidential corpus (synthetic):</b> ${m.records} generated student-service records, one record per student, across ${m.topics} topics, using real PSG programme and faculty names. Example: <i>${m.sample_record}</i>`,
+`<b>Not a real LLM:</b> the generator is a small trigram model plus an in-context copy rule that imitates retrieval-augmented behaviour. The DP mechanisms (LimitedDomain, AboveThreshold, composition) are exact; absolute accuracies are not comparable to the paper's. <code>llm_backend.py</code> swaps in Llama or OPT.`,
+`<b>Guarantee scope:</b> (ε, δ)-DP per record for one question, with δ = 10⁻⁴. Repeated questions compose, so a deployed system needs a per-user budget.`,
+`<b>Reading the curves:</b> VoteRAG and Non-RAG are almost deterministic, so their error bars are near zero. DPSparseVoteRAG can sit slightly above VoteRAG because noise sometimes fixes a vote lost to irrelevant records. Small topics (under 40 records) are hard for every voting method, as in the paper.`,
+`<b>Membership test:</b> with 288 targets the AUC uncertainty is about ±0.07, so a DP value near 0.5 means “no detectable leak”, not a proof.`].map(x=>`<li>${x}</li>`).join('');
+</script></body></html>
