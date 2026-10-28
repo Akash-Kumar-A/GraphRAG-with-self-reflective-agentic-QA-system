@@ -1,0 +1,9 @@
+Document: Medical Leave Policy
+Section: Student medical leave
+
+A student requesting medical leave must submit a medical certificate issued by a registered medical practitioner.
+The Dean of Academic Affairs reviews and approves medical leave applications.
+Students should notify their department office when medical leave extends beyond three working days.
+Medical leave does not automatically extend assignment deadlines; students must contact the course instructor.
+A medical certificate is required as evidence for a medical leave request.
+The department office records approved student leave and informs the relevant course instructors.

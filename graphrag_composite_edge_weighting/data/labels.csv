@@ -1,0 +1,17 @@
+entity,topic
+medical leave,medical_leave
+medical certificate,medical_leave
+dean of academic affairs,medical_leave
+department office,medical_leave
+hostel residents,hostel
+hostel regulations,hostel
+warden,hostel
+hostel mess,hostel
+hostel office,hostel
+examination office,examinations
+controller of examinations,examinations
+examination timetable,examinations
+revaluation request,examinations
+registrar,faculty_admin
+department heads,faculty_admin
+academic policy,faculty_admin

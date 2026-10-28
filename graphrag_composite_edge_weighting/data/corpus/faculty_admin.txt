@@ -1,0 +1,9 @@
+Document: Faculty and Administration
+Section: Academic administration
+
+The Dean of Academic Affairs coordinates academic policy across departments.
+Department heads assign teaching responsibilities and review course delivery.
+The department office maintains course records and communicates academic notices to students.
+The registrar maintains official student enrollment records.
+The controller of examinations works with the registrar to verify examination eligibility.
+The Dean reviews requests that require an exception to standard academic policy.
